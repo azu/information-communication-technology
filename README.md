@@ -1,26 +1,12 @@
 # information-technology
 
-情報の読み方と伝え方
+情報の読み方と伝え方について。
 
-## Install
+## 読み方
 
-Install with [npm](https://www.npmjs.com/):
+## 発信する人に情報は集まる
 
-    npm install information-technology
-
-## Usage
-
-- [ ] Write usage instructions
-
-## Changelog
-
-See [Releases page](https://github.com/azu/information-technology/releases).
-
-## Running tests
-
-Install devDependencies and Run `npm test`:
-
-    npm i -d && npm test
+## 伝え方
 
 ## Contributing
 

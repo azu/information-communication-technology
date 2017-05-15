@@ -14,7 +14,7 @@
   "description": "情報の読み方と伝え方",
   "main": "lib/information-technology.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "textlint README.md"
   },
   "keywords": [
     "IT"

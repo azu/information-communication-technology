@@ -1,0 +1,256 @@
+version: 1
+rules:
+# 大文字小文字全角半角の統一
+  - expected: Cookie
+# 以下と等価 正規表現には強制でgフラグが付く
+# - expected: Cookie
+#   pattern: "/[CcＣｃ][OoＯｏ][OoＯｏ][KkＫｋ][IiＩｉ][EeＥｅ]/g"
+#   options:
+#     wordBoundary: false
+#   specs: []
+  - expected: Markdown
+# 正規表現で置換もできる
+  - expected: JavaScript
+    patterns:
+      - javascript
+    options:
+      wordBoundary: true
+    specs:
+      - from: javascript
+        to:   JavaScript
+
+  - expected: ECMAScript $1
+    pattern: /ECMAScript([0-9]+)/
+# 変換結果についてテストも書ける
+  - expected: jQuery
+    specs:
+      - from: jquery
+        to:   jQuery
+      - from: ＪＱＵＥＲＹ
+        to:   jQuery
+
+# 変換結果が期待通りではなかった場合、ルールのロードに失敗する
+# - expected: JavaScript
+#   specs:
+#     - from: JAVASCRIPT
+#       to:   JavaScprit # この場合はテスト側が間違ってる！
+# Error: JavaScript spec failed. "JAVASCRIPT", expected "JavaScprit", but got "JavaScript", /[JjＪｊ][AaＡａ][VvＶｖ][AaＡａ][SsＳｓ][CcＣｃ][RrＲｒ][IiＩｉ][PpＰｐ][TtＴｔ]/g
+
+# 表現の統一を図る
+  - expected: デフォルト
+    pattern:  ディフォルト
+
+# patternは複数記述可能
+  - expected: ハードウェア
+    pattern:
+      - ハードウエアー
+      - ハードウエア   # 正規表現に変換する都合上短いものを後に書いたほうがよい
+      - ハードウェアー
+
+# patternには正規表現が利用可能 否定戻り先読みが欲しい…(JSにはない
+  - expected: $1ソフトウェア
+    pattern:  /([^経])ソフトウエア/
+    specs:
+      # 普通に変換
+      - from: 広義のソフトウエア
+        to:   広義のソフトウェア
+      # 日経ソフトウエア(書名)は変換しない
+      - from: 日経ソフトウエア
+        to:   日経ソフトウエア
+
+# Project
+  - expected: 基本文法
+    patterns:
+      - 基礎文法
+  # http://www.ecma-international.org/ecma-262/6.0/#sec-comments
+  # MultiLineComment
+  # SingleLineComment
+  - expected: 一行コメント
+    patterns:
+      - 1行コメント
+      - ワンラインコメント
+    prh: 仕様的に http://www.ecma-international.org/ecma-262/6.0/#sec-comments
+  - expected: $1一行コメント
+    patterns: /([^1一数])行コメント/
+    prh: 仕様的に http://www.ecma-international.org/ecma-262/6.0/#sec-comments
+  - expected: 複数行コメント
+    patterns:
+      - ブロックコメント
+      - マルチラインコメント
+    prh: 仕様的に http://www.ecma-international.org/ecma-262/6.0/#sec-comments
+  - expected: うるう年
+    patterns: 閏年
+  - expected: 実行する文
+    patterns:
+      - 処理したい文
+      - 処理する文
+  - expected: case節
+    patterns:
+      - case文
+    prh: "caseは節かブロックです http://www.ecma-international.org/ecma-262/7.0/#prod-CaseClauses"
+  - expected: break文
+    patterns:
+      - break式
+  - expected: 処理中の$1
+    patterns: /実行中の([^、。\s]*?文)/
+    prh: "文は処理中という扱いです"
+    specs:
+      - from: 偶数ではない場合、実行中の文をスキップしています。
+        to  : 偶数ではない場合、処理中の文をスキップしています。
+  - expected: 処理中の$1
+    patterns: /現在実行中の([^、。\s]*?文)/
+    prh: "文は処理中という扱いです"
+    specs:
+      - from: 現在実行中のループ文を終了することができます。
+        to  : 処理中のループ文を終了することができます。
+  - expected: 反復処理
+    patterns:
+      - 繰り返し処理
+      - ループ処理
+    prh: 繰り返しがループ的なものか、同じことを何度も繰り返すかが曖昧なので反復処理にする
+  - expected: 浮動小数点数$1
+    patterns:
+      - /浮動小数点([ぁ-ん])/
+    prh: "浮動小数点ではなく浮動小数点数を使ってください"
+  - expected: シングルスレッド
+    patterns:
+      - 単一スレッド
+  - expected: for...in
+    patterns:
+      - /for\.{1,2}in/
+      - for-in
+      - for/in
+  - expected: for...of
+    patterns:
+      - /for\.{1,2}of/
+      - for-of
+      - for/of
+  - expected: バッククオート
+    patterns: バックティック
+  - expected: 匿名関数
+    patterns: 無名関数
+  - expected: Array-like
+    patterns: 配列ライク
+  - expected: Promiseチェーン
+    patterns:
+      - /thenチェーン/i
+      - /promise chain/i
+    prh: https://github.com/asciidwango/js-primer/pull/116
+    specs:
+      - from: thenチェーンと言います
+        to  : Promiseチェーンと言います
+  - expected: Statement
+    patterns: ステートメント
+    options:
+      wordBoundary: true
+  - expected: Expression
+    patterns: エクスプレッション
+    options:
+      wordBoundary: true
+  - expected: 暗黙的な型変換
+    patterns: 暗黙的な変換
+  - expected: プリミティブ型
+    patterns:
+      - プリミティブなデータ型
+      - プリミティブデータ型
+    prh: StringやNumberといったtypeのこと。プリミティブ値の型を示す
+  - expected: プリミティブ型の値
+    patterns:
+      - プリミティブ値
+    prh: 仕様におけるprimitive valueのこと。 strや1といったプリミティブ型の値を示す
+  - expected: インデックス
+    patterns:
+      - 添字
+    prh: 配列では添字ではなく、インデックスを使います。
+  - expected: インデックス
+    patterns:
+      - 添字
+    prh: 配列では添字ではなく、インデックスを使います。
+  - expected: 疎な配列
+    patterns: 疎の配列
+    prh: sparse arrayのこと
+  - expected: 密な配列
+    patterns: 密の配列
+  - expected: テンプレートリテラル
+    patterns: /Template\s*Literal/i
+  - expected: テンプレート文字列
+    patterns: /Template\s*Strings/i
+  - expected: タグ付きテンプレートリテラル
+    patterns: /Tagged\s*template\s*literals?/i
+  - expected: Unicode
+    patterns: ユニコード
+  - expected: UTF-16
+    patterns: /UTF16/i
+  # Code Unit/ Code Point
+  - expected: Code Unit
+  - expected: Code Poiint
+  - expected: 各Code Unitごとに
+    patterns: Code Unit単位
+  - expected: 各Code Pointごとに
+    patterns: Code Point単位
+  # ファイルの読み書き / ファイルI/O
+  - expected: ファイルの読み書き
+    patterns:
+      - ファイルI/0
+      - ファイルI0
+  # 一致とマッチ
+  ## 一致は ===
+  - expected: $1一致
+    patterns:
+      - /(正規表現に)一致/
+      - /(パターンに)一致/
+  - expected: $1マッチ
+    patterns:
+      - /(パターンに)一致/
+      - /(正規表現に)一致/
+
+# typo
+  - expected: $1進数
+    patterns:
+      - /(\d+)真数/
+  - expected: 同じ変数名を
+    patterns:
+      - /同じ変数を/
+  - expected: 機会が$1
+    patterns: /機械が(多い|ある|あり)/
+    specs:
+      - from: 機械がある
+        to:   機会がある
+    prh: 機械という単語が出てきたら直します
+  - expected: 状態で
+    patterns: 常体で
+  - expected: する場合は
+    patterns: する倍は
+  - expected: 式文
+    patterns: 文式
+  - expected: 宣言的
+    patterns: 宣言亭
+  - expected: コンストラクタ
+    patterns: 今ストラク
+# 文体
+  - expected: どのように
+    patterns:
+      - どうやって
+  - expected: $1ずつ
+    patterns: /(\d+[個つ])づつ/
+    specs:
+      - from: 2個づつ
+        to  : 2個ずつ
+      - from: 2つづつ
+        to  : 2つずつ
+  - expected: 処理を行います
+    patterns:
+      - 処理をします
+# 漢字開き
+  - expected: もとづ$1
+    patterns: /基づ(く|き)/
+  - expected: 見てい$1
+    patterns: /見て行(く|き)/
+    specs:
+      - from: では、実際にどのように書くかの例を見て行きたいと思います。
+        to:   では、実際にどのように書くかの例を見ていきたいと思います。
+  - expected: どのような
+    patterns: /どういう(?!こと)/
+    specs:
+      - from: どういうものがthenableなのか
+        to:   どのようなものがthenableなのか

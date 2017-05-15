@@ -1,0 +1,18 @@
+{
+  "filters": {
+    "comments": true,
+    "whitelist": true
+  },
+  "rules": {
+    "ja-no-redundant-expression": true,
+    "period-in-list-item": true,
+    "preset-ja-technical-writing": {
+      "no-exclamation-question-mark": false
+    },
+    "prh": {
+      "rulePaths": [
+        "./prh.yml"
+      ]
+    }
+  }
+}
