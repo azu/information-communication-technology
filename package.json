@@ -1,0 +1,41 @@
+{
+  "directories": {
+    "test": "test"
+  },
+  "author": "azu",
+  "license": "MIT",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "name": "information-technology",
+  "version": "1.0.0",
+  "description": "情報の読み方と伝え方",
+  "main": "lib/information-technology.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "IT"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azu/information-technology.git"
+  },
+  "bugs": {
+    "url": "https://github.com/azu/information-technology/issues"
+  },
+  "homepage": "https://github.com/azu/information-technology",
+  "dependencies": {
+    "textlint": "^8.0.1",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-filter-rule-whitelist": "^1.0.2",
+    "textlint-rule-eslint": "^2.0.0",
+    "textlint-rule-ja-no-redundant-expression": "^1.0.3",
+    "textlint-rule-no-js-function-paren": "^1.0.1",
+    "textlint-rule-period-in-list-item": "^0.2.0",
+    "textlint-rule-preset-ja-technical-writing": "^0.1.3",
+    "textlint-rule-prh": "^3.1.3"
+  }
+}
