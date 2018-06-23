@@ -1,4 +1,4 @@
-# information-technology
+# information-communication-technology
 
 情報の読み方と伝え方について。
 
